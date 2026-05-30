@@ -18,10 +18,12 @@ import type {
 import {
   addresses as seedAddresses,
   banners,
+  bestSellerSlugs,
   categories,
   creditStatus,
   currentAccount,
   initialCart,
+  newArrivalSlugs,
   orders as seedOrders,
   products,
   storeBanks,
@@ -121,6 +123,23 @@ export const mockStoreApi: StoreApi = {
 
       if (filters.inStockOnly) {
         list = list.filter((p) => p.inStock);
+      }
+
+      if (typeof filters.minPrice === "number") {
+        list = list.filter((p) => p.price.amount >= filters.minPrice!);
+      }
+
+      if (typeof filters.maxPrice === "number") {
+        list = list.filter((p) => p.price.amount <= filters.maxPrice!);
+      }
+
+      if (filters.featured) {
+        const order =
+          filters.featured === "new_arrivals" ? newArrivalSlugs : bestSellerSlugs;
+        const rank = new Map(order.map((slug, i) => [slug, i]));
+        list = list
+          .filter((p) => rank.has(p.slug))
+          .sort((a, b) => rank.get(a.slug)! - rank.get(b.slug)!);
       }
 
       switch (filters.sort) {

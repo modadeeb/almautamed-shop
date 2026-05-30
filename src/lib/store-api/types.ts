@@ -216,6 +216,12 @@ export interface ProductFilters {
   categorySlug?: string;
   search?: string;
   inStockOnly?: boolean;
+  /** أدنى سعر (شامل) لتصفية النطاق السعري. */
+  minPrice?: number;
+  /** أقصى سعر (شامل) لتصفية النطاق السعري. */
+  maxPrice?: number;
+  /** شريحة مميّزة للعرض في الصفحة الرئيسية (وصل حديثاً / الأكثر مبيعاً). */
+  featured?: "new_arrivals" | "best_sellers";
   page?: number;
   pageSize?: number;
   sort?: "newest" | "price_asc" | "price_desc" | "name";

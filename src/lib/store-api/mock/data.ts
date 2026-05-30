@@ -219,6 +219,25 @@ export const products: Product[] = [
   },
 ];
 
+/** شرائح مميّزة للصفحة الرئيسية (تُحاكي حقولاً يوفّرها الـ ERP لاحقاً). */
+export const newArrivalSlugs: string[] = [
+  "blood-pressure-monitor",
+  "sunscreen-spf50",
+  "vitamin-d3-5000",
+  "moisturizing-cream",
+  "baby-formula-stage1",
+  "hand-sanitizer-500",
+];
+
+export const bestSellerSlugs: string[] = [
+  "paracetamol-500",
+  "vitamin-c-1000",
+  "baby-diapers-m",
+  "digital-thermometer",
+  "ibuprofen-400",
+  "amoxicillin-500",
+];
+
 // ————————————————————————————————————————————————————————————————
 // البانرات
 // ————————————————————————————————————————————————————————————————
