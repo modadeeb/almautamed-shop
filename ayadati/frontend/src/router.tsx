@@ -9,6 +9,8 @@ const Home = lazy(() => import('@/pages/Home'))
 const Login = lazy(() => import('@/pages/auth/Login'))
 const Register = lazy(() => import('@/pages/auth/Register'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
+const DoctorSearch = lazy(() => import('@/pages/doctors/DoctorSearch'))
+const DoctorProfile = lazy(() => import('@/pages/doctors/DoctorProfile'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
 export const router = createBrowserRouter([
@@ -17,6 +19,8 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
+      { path: 'doctors', element: <DoctorSearch /> },
+      { path: 'doctors/:id', element: <DoctorProfile /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
       {

@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Doctor\ProfileController as DoctorProfileController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HealthController;
+use App\Http\Controllers\SpecialtyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,11 +29,26 @@ Route::post('/login', [AuthController::class, 'login'])
     ->middleware('throttle:6,1')
     ->name('auth.login');
 
+/*
+| الأطباء والتخصّصات — مسارات عامة (بحث/تصفّح).
+*/
+Route::get('/specialties', [SpecialtyController::class, 'index'])->name('specialties.index');
+Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+Route::get('/doctors/{doctor}', [DoctorController::class, 'show'])->name('doctors.show');
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::get('/user', [AuthController::class, 'me'])->name('auth.me');
 
-    // أمثلة مسارات محميّة بالأدوار (تُستبدل بوظائف فعلية في المراحل التالية).
+    // ملف الطبيب الخاص (إدارة ذاتية).
+    Route::middleware('role:doctor')->group(function () {
+        Route::get('/doctor/profile', [DoctorProfileController::class, 'show'])
+            ->name('doctor.profile.show');
+        Route::put('/doctor/profile', [DoctorProfileController::class, 'update'])
+            ->name('doctor.profile.update');
+    });
+
+    // نقاط فحص دور (smoke) للتأكد من عمل middleware:role.
     Route::get('/admin/ping', fn () => response()->json(['ok' => true, 'scope' => 'admin']))
         ->middleware('role:admin');
     Route::get('/doctor/ping', fn () => response()->json(['ok' => true, 'scope' => 'doctor']))

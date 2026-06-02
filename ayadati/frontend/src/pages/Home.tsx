@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 import { api } from '@/lib/api'
 import { Skeleton } from '@/components/Skeleton'
 
@@ -26,6 +27,9 @@ export default function Home() {
           منصّة حجز العيادات الذكية في اليمن — احجز موعدك بسهولة، وتلقَّ تذكيراً
           تلقائياً قبل موعدك، وأعد الجدولة أونلاين دون عناء.
         </p>
+        <Link to="/doctors" className="btn-primary mt-4">
+          ابحث عن طبيب
+        </Link>
       </section>
 
       <section className="card">
