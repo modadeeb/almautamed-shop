@@ -25,6 +25,11 @@ return Application::configure(basePath: dirname(__DIR__))
         // مصادقة Sanctum القائمة على الكوكيز لطلبات الواجهة (SPA).
         $middleware->statefulApi();
 
+        // اسم مختصر لـ middleware التحقّق من الدور.
+        $middleware->alias([
+            'role' => \App\Http\Middleware\EnsureRole::class,
+        ]);
+
         // تحديد معدّل الطلبات الافتراضي لمسارات الـ API (يُشدَّد لكل مسار حسّاس في M1+).
         $middleware->api(prepend: [
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',

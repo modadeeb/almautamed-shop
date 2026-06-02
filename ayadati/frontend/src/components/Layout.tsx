@@ -1,10 +1,19 @@
 import { Suspense } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { OfflineBanner } from '@/components/OfflineBanner'
 import { PageSkeleton } from '@/components/Skeleton'
+import { useAuth } from '@/features/auth/useAuth'
 
 /** الهيكل العام للتطبيق: ترويسة RTL + منطقة محتوى مع Suspense للتحميل الكسول. */
 export function Layout() {
+  const { user, status, logout } = useAuth()
+  const navigate = useNavigate()
+
+  async function handleLogout() {
+    await logout()
+    navigate('/login')
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <OfflineBanner />
@@ -13,8 +22,31 @@ export function Layout() {
           <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold text-primary">عيادتي</span>
           </Link>
-          <nav className="text-sm text-ink-muted">
-            <span>منصّة حجز العيادات الذكية</span>
+          <nav className="flex items-center gap-3 text-sm">
+            {status === 'authenticated' && user ? (
+              <>
+                <Link to="/dashboard" className="text-ink-muted hover:text-primary">
+                  لوحتي
+                </Link>
+                <span className="text-ink-muted">{user.name}</span>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="font-semibold text-danger"
+                >
+                  خروج
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="text-ink-muted hover:text-primary">
+                  دخول
+                </Link>
+                <Link to="/register" className="font-semibold text-primary">
+                  حساب جديد
+                </Link>
+              </>
+            )}
           </nav>
         </div>
       </header>
