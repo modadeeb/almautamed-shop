@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>غير متصل — عيادتي</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f6faff;
+        color: #141d23;
+        font-family: 'Cairo', 'Tajawal', system-ui, sans-serif;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      .box {
+        max-width: 22rem;
+      }
+      h1 {
+        color: #0056b3;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        color: #424752;
+        line-height: 1.7;
+      }
+      button {
+        margin-top: 1.25rem;
+        background: #0056b3;
+        color: #fff;
+        border: 0;
+        border-radius: 0.25rem;
+        padding: 0.7rem 1.4rem;
+        font-size: 1rem;
+        font-family: inherit;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div style="font-size: 3rem">📶</div>
+      <h1>لا يوجد اتصال بالإنترنت</h1>
+      <p>
+        يبدو أنك غير متصل بالشبكة حالياً. تحقّق من اتصالك ثم حاول مرة أخرى. بعض
+        الصفحات التي زرتها سابقاً قد تظل متاحة.
+      </p>
+      <button onclick="location.reload()">إعادة المحاولة</button>
+    </div>
+  </body>
+</html>
