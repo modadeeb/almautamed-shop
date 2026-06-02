@@ -14,6 +14,8 @@ const DoctorProfile = lazy(() => import('@/pages/doctors/DoctorProfile'))
 const BookingCheckout = lazy(() => import('@/pages/booking/BookingCheckout'))
 const MyAppointments = lazy(() => import('@/pages/patient/MyAppointments'))
 const DoctorWorkingHours = lazy(() => import('@/pages/doctor/WorkingHours'))
+const DoctorAppointments = lazy(() => import('@/pages/doctor/Appointments'))
+const DoctorManualBooking = lazy(() => import('@/pages/doctor/ManualBooking'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
 export const router = createBrowserRouter([
@@ -55,6 +57,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute roles={['doctor']}>
             <DoctorWorkingHours />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'doctor/appointments',
+        element: (
+          <ProtectedRoute roles={['doctor']}>
+            <DoctorAppointments />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'doctor/manual-booking',
+        element: (
+          <ProtectedRoute roles={['doctor']}>
+            <DoctorManualBooking />
           </ProtectedRoute>
         ),
       },

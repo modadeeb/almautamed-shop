@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Doctor\AppointmentController as DoctorAppointmentController;
 use App\Http\Controllers\Doctor\ProfileController as DoctorProfileController;
 use App\Http\Controllers\Doctor\WorkingHoursController;
 use App\Http\Controllers\DoctorController;
@@ -69,6 +70,18 @@ Route::middleware('auth:sanctum')->group(function () {
             ->name('doctor.working-hours.index');
         Route::put('/doctor/working-hours', [WorkingHoursController::class, 'sync'])
             ->name('doctor.working-hours.sync');
+
+        // إدارة المواعيد ومراجعة الإيصالات والحجز اليدوي.
+        Route::get('/doctor/appointments', [DoctorAppointmentController::class, 'index'])
+            ->name('doctor.appointments.index');
+        Route::post('/doctor/appointments/manual', [DoctorAppointmentController::class, 'storeManual'])
+            ->name('doctor.appointments.manual');
+        Route::patch('/doctor/appointments/{appointment}/status', [DoctorAppointmentController::class, 'updateStatus'])
+            ->name('doctor.appointments.status');
+        Route::post('/doctor/appointments/{appointment}/payment/approve', [DoctorAppointmentController::class, 'approvePayment'])
+            ->name('doctor.appointments.payment.approve');
+        Route::post('/doctor/appointments/{appointment}/payment/reject', [DoctorAppointmentController::class, 'rejectPayment'])
+            ->name('doctor.appointments.payment.reject');
     });
 
     // نقاط فحص دور (smoke) للتأكد من عمل middleware:role.

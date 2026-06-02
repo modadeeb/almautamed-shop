@@ -33,8 +33,11 @@ class BookingService
         CarbonInterface $startsAt,
         AppointmentStatus $status = AppointmentStatus::Pending,
         array $attributes = [],
+        bool $enforceSlot = true,
     ): Appointment {
-        if (! $this->slots->isValidSlot($doctor, $startsAt)) {
+        // الحجز اليدوي (مريض حضر مباشرةً) قد يكون خارج الفترات المولّدة، لذا
+        // نتجاوز التحقّق من الفترة لكن نُبقي القيد الفريد لمنع التعارض.
+        if ($enforceSlot && ! $this->slots->isValidSlot($doctor, $startsAt)) {
             throw new SlotUnavailableException;
         }
 

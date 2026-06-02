@@ -17,7 +17,10 @@ class AppointmentFactory extends Factory
 
     public function definition(): array
     {
-        $start = now()->addDay()->setTime(9, 0);
+        // وقت بدء متغيّر لتقليل تصادم القيد الفريد (doctor_id, starts_at).
+        $start = now()
+            ->addDays(fake()->numberBetween(1, 30))
+            ->setTime(fake()->numberBetween(8, 17), fake()->randomElement([0, 30]), 0);
 
         return [
             'doctor_id' => Doctor::factory(),

@@ -28,8 +28,20 @@ export default function Dashboard() {
         <section className="card space-y-2">
           <h2 className="font-semibold">إدارة العيادة</h2>
           <div className="flex flex-wrap gap-2">
-            <Link to="/doctor/schedule" className="btn-primary">
+            <Link to="/doctor/appointments" className="btn-primary">
+              المواعيد
+            </Link>
+            <Link
+              to="/doctor/schedule"
+              className="rounded border border-primary px-4 py-2 text-sm font-semibold text-primary"
+            >
               أوقات العمل
+            </Link>
+            <Link
+              to="/doctor/manual-booking"
+              className="rounded border border-primary px-4 py-2 text-sm font-semibold text-primary"
+            >
+              حجز يدوي
             </Link>
           </div>
         </section>
