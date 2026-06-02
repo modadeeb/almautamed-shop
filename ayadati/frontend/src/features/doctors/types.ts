@@ -14,6 +14,9 @@ export interface Doctor {
   address: string | null
   bio: string | null
   years_experience: number | null
+  consultation_fee?: string | number | null
+  karimi_account_number?: string | null
+  karimi_account_name?: string | null
   photo_url: string | null
 }
 

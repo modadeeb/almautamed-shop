@@ -37,10 +37,18 @@ export default function Dashboard() {
 
       {user.role === 'patient' && (
         <section className="card space-y-2">
-          <h2 className="font-semibold">احجز موعداً</h2>
-          <Link to="/doctors" className="btn-primary">
-            ابحث عن طبيب
-          </Link>
+          <h2 className="font-semibold">حجوزاتك</h2>
+          <div className="flex flex-wrap gap-2">
+            <Link to="/doctors" className="btn-primary">
+              ابحث عن طبيب
+            </Link>
+            <Link
+              to="/my/appointments"
+              className="rounded border border-primary px-4 py-2 text-sm font-semibold text-primary"
+            >
+              حجوزاتي
+            </Link>
+          </div>
         </section>
       )}
 

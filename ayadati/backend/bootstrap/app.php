@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CompressResponse;
 use App\Http\Middleware\SecurityHeaders;
+use App\Services\Booking\Exceptions\SlotUnavailableException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -51,6 +52,15 @@ return Application::configure(basePath: dirname(__DIR__))
                 'message' => 'البيانات المُدخلة غير صحيحة.',
                 'errors' => $e->errors(),
             ], 422);
+        });
+
+        // الفترة لم تعد متاحة (محجوزة/خارج الدوام) ⇒ 409 برسالة عربية.
+        $exceptions->render(function (SlotUnavailableException $e, Request $request) {
+            if (! $request->is('api/*')) {
+                return null;
+            }
+
+            return response()->json(['message' => $e->getMessage()], 409);
         });
 
         $exceptions->render(function (AuthenticationException $e, Request $request) {

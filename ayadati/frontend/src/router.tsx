@@ -12,6 +12,7 @@ const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const DoctorSearch = lazy(() => import('@/pages/doctors/DoctorSearch'))
 const DoctorProfile = lazy(() => import('@/pages/doctors/DoctorProfile'))
 const BookingCheckout = lazy(() => import('@/pages/booking/BookingCheckout'))
+const MyAppointments = lazy(() => import('@/pages/patient/MyAppointments'))
 const DoctorWorkingHours = lazy(() => import('@/pages/doctor/WorkingHours'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
@@ -38,6 +39,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute roles={['patient']}>
             <BookingCheckout />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'my/appointments',
+        element: (
+          <ProtectedRoute roles={['patient']}>
+            <MyAppointments />
           </ProtectedRoute>
         ),
       },

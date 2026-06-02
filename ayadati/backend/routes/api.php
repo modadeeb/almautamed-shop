@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Doctor\ProfileController as DoctorProfileController;
 use App\Http\Controllers\Doctor\WorkingHoursController;
@@ -42,6 +43,19 @@ Route::get('/doctors/{doctor}/slots', DoctorSlotController::class)->name('doctor
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::get('/user', [AuthController::class, 'me'])->name('auth.me');
+
+    // الحجز والدفع (المريض).
+    Route::middleware('role:patient')->group(function () {
+        Route::get('/my/appointments', [AppointmentController::class, 'index'])
+            ->name('appointments.index');
+        Route::post('/doctors/{doctor}/appointments', [AppointmentController::class, 'store'])
+            ->middleware('throttle:20,1')
+            ->name('appointments.store');
+    });
+
+    // عرض الإيصال (مخوّل عبر Policy: المريض/الطبيب/الأدمن).
+    Route::get('/appointments/{appointment}/receipt', [AppointmentController::class, 'receipt'])
+        ->name('appointments.receipt');
 
     // ملف الطبيب الخاص (إدارة ذاتية).
     Route::middleware('role:doctor')->group(function () {

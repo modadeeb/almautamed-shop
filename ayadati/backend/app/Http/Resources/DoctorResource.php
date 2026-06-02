@@ -24,6 +24,9 @@ class DoctorResource extends JsonResource
             'address' => $this->address,
             'bio' => $this->bio,
             'years_experience' => $this->years_experience,
+            'consultation_fee' => $this->consultation_fee,
+            'karimi_account_number' => $this->karimi_account_number,
+            'karimi_account_name' => $this->karimi_account_name,
             'photo_url' => $this->photo_path
                 ? Storage::disk('public')->url($this->photo_path)
                 : null,

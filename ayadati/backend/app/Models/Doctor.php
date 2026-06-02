@@ -22,6 +22,9 @@ class Doctor extends Model
         'bio',
         'photo_path',
         'years_experience',
+        'consultation_fee',
+        'karimi_account_number',
+        'karimi_account_name',
     ];
 
     protected function casts(): array
@@ -29,6 +32,7 @@ class Doctor extends Model
         return [
             'is_published' => 'boolean',
             'years_experience' => 'integer',
+            'consultation_fee' => 'decimal:2',
         ];
     }
 
