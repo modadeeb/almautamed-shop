@@ -1,11 +1,27 @@
-import { Link, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDoctor } from '@/features/doctors/hooks'
+import { useAuth } from '@/features/auth/useAuth'
 import { LazyImage } from '@/components/LazyImage'
+import { SlotPicker } from '@/components/SlotPicker'
 import { PageSkeleton } from '@/components/Skeleton'
+import type { Slot } from '@/features/schedule/types'
 
 export default function DoctorProfile() {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
+  const { status } = useAuth()
+  const [selected, setSelected] = useState<Slot | null>(null)
   const { data: doctor, isPending, isError } = useDoctor(id ?? '')
+
+  function continueBooking() {
+    if (!selected || !id) return
+    if (status !== 'authenticated') {
+      navigate('/login', { state: { from: `/doctors/${id}` } })
+      return
+    }
+    navigate(`/doctors/${id}/book`, { state: { slot: selected } })
+  }
 
   if (isPending) return <PageSkeleton />
   if (isError || !doctor) {
@@ -57,9 +73,23 @@ export default function DoctorProfile() {
         </section>
       )}
 
-      {/* زر الحجز — يُفعّل في M3/M4 */}
-      <button type="button" className="btn-primary w-full" disabled>
-        حجز موعد (قريباً)
+      {/* المواعيد المتاحة */}
+      <section className="card space-y-3">
+        <h2 className="font-semibold">المواعيد المتاحة</h2>
+        <SlotPicker
+          doctorId={doctor.id}
+          selected={selected?.starts_at ?? null}
+          onSelect={setSelected}
+        />
+      </section>
+
+      <button
+        type="button"
+        className="btn-primary w-full"
+        disabled={!selected}
+        onClick={continueBooking}
+      >
+        {selected ? `متابعة الحجز (${selected.time})` : 'اختر موعداً للمتابعة'}
       </button>
     </div>
   )

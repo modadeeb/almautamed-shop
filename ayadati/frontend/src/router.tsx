@@ -11,6 +11,8 @@ const Register = lazy(() => import('@/pages/auth/Register'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const DoctorSearch = lazy(() => import('@/pages/doctors/DoctorSearch'))
 const DoctorProfile = lazy(() => import('@/pages/doctors/DoctorProfile'))
+const BookingCheckout = lazy(() => import('@/pages/booking/BookingCheckout'))
+const DoctorWorkingHours = lazy(() => import('@/pages/doctor/WorkingHours'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
 export const router = createBrowserRouter([
@@ -28,6 +30,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'doctors/:id/book',
+        element: (
+          <ProtectedRoute roles={['patient']}>
+            <BookingCheckout />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'doctor/schedule',
+        element: (
+          <ProtectedRoute roles={['doctor']}>
+            <DoctorWorkingHours />
           </ProtectedRoute>
         ),
       },

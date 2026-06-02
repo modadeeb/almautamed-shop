@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Doctor\ProfileController as DoctorProfileController;
+use App\Http\Controllers\Doctor\WorkingHoursController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\DoctorSlotController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\SpecialtyController;
 use Illuminate\Http\Request;
@@ -35,6 +37,7 @@ Route::post('/login', [AuthController::class, 'login'])
 Route::get('/specialties', [SpecialtyController::class, 'index'])->name('specialties.index');
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
 Route::get('/doctors/{doctor}', [DoctorController::class, 'show'])->name('doctors.show');
+Route::get('/doctors/{doctor}/slots', DoctorSlotController::class)->name('doctors.slots');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
@@ -46,6 +49,12 @@ Route::middleware('auth:sanctum')->group(function () {
             ->name('doctor.profile.show');
         Route::put('/doctor/profile', [DoctorProfileController::class, 'update'])
             ->name('doctor.profile.update');
+
+        // أوقات العمل.
+        Route::get('/doctor/working-hours', [WorkingHoursController::class, 'index'])
+            ->name('doctor.working-hours.index');
+        Route::put('/doctor/working-hours', [WorkingHoursController::class, 'sync'])
+            ->name('doctor.working-hours.sync');
     });
 
     // نقاط فحص دور (smoke) للتأكد من عمل middleware:role.

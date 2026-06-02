@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useAuth } from '@/features/auth/useAuth'
 import type { UserRole } from '@/features/auth/types'
 
@@ -23,10 +24,29 @@ export default function Dashboard() {
         </p>
       </section>
 
+      {user.role === 'doctor' && (
+        <section className="card space-y-2">
+          <h2 className="font-semibold">إدارة العيادة</h2>
+          <div className="flex flex-wrap gap-2">
+            <Link to="/doctor/schedule" className="btn-primary">
+              أوقات العمل
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {user.role === 'patient' && (
+        <section className="card space-y-2">
+          <h2 className="font-semibold">احجز موعداً</h2>
+          <Link to="/doctors" className="btn-primary">
+            ابحث عن طبيب
+          </Link>
+        </section>
+      )}
+
       <section className="card">
         <p className="text-sm text-ink-muted">
-          هذه لوحتك المبدئية. ستظهر هنا حجوزاتك ومواعيدك وأدواتك حسب دورك في
-          المراحل القادمة.
+          ستظهر هنا حجوزاتك ومواعيدك وأدواتك حسب دورك في المراحل القادمة.
         </p>
       </section>
     </div>
